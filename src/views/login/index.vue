@@ -1,7 +1,9 @@
 <template>
   <div class="login-container">
       <!-- 顶部导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录"/>
+    <van-nav-bar class="page-nav-bar" title="登录">
+      <van-icon slot="left" name="arrow-left" @click="$router.back()"/>
+    </van-nav-bar>
 
 <!-- form表单信息模块 -->
     <van-form ref="loginForm" @submit="onSubmit">
@@ -74,6 +76,8 @@ export default {
         this.$toast.success('登录成功')
         // 登录成功后把数据token保存到本地，这一步是数据保存步骤
         this.$store.commit('setUser', data.data)
+        // 登录成功，跳转回原来页面，但是不严谨，性能优化时再讲
+        this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或者验证码不正确')
